@@ -3,7 +3,5 @@ Gunicorn
 psycopg2-binary
 psycopg2
 Flask-Bcrypt
-random
-flask_mail
 static
 requests
