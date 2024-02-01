@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body >
+{% extends 'base.html' %}
+{% block title %}
+  Welcome to SwaadSagaar/Products
+{% endblock %}
+{% block content %}
+    <div class="container centered-content">
+        {% for index, info in item %}
+        <div style="width: 390px; height: 301px; left: 20%; top: 89px; position: absolute">
+            <img style="width: 390px; height: auto; left: 0px; top: 0px; position: absolute" src="data:image/jpeg;base64,{{ selected_item[5] }}"/>
+        </div>
+        <div style="width: 298px; height: 206px; left: 50%; top: 89px; position: absolute; display: flex; flex-direction: column; align-items: flex-start; color: white;">
+            <div style="font-size: 24px; font-weight: 400; word-wrap: break-word; margin-bottom: 10px;">{{selected_item[1]}}</div>
+            <div style="display: flex; flex-direction: row; align-items: center; margin-top: 170px; position: absolute;">
+                <div style="font-size: 20px; font-weight: 400; word-wrap: break-word;">Price: ${{selected_item[2]}}</div>
+                <div style="margin-left: 20px; font-size: 20px; font-weight: 400; word-wrap: break-word;">Rating: {{selected_item[3]}}</div>
+            </div>
+            <div style="font-size: 16px; font-weight: 400; word-wrap: break-word; margin-top: 20px;">{{selected_item[4]}}</div>
+        </div>
+        <div style="left: 50%; top: 344px; position: absolute; cursor: pointer;">
+            <a href="{{ url_for('add_to_cart', item_index=index) }}"><button type="button" class="text-white rounded font-medium text-sm px-8 py-3 me-2 mb-2 mr-4" style="background-color: #3742FA;">Add to Cart</button></a>
+            <a href="{{ url_for('add_to_wishlist', item_index=index) }}"><button type="button" class="text-white rounded font-medium text-sm px-8 py-3 me-2 mb-2" style="background-color: #3742FA;">Add to Wishlist</button></a>
+        </div>
+        <div style="width: auto; height: auto; top: 479px; position: absolute; color: white; margin-left: 80px;">
+          <div class="grid grid-flow-col justify-stretch lg:grid-cols-6">
+              {% for index, info in item %}
+                <div style="display: flex; flex-direction: column; cursor: pointer;">
+                  <a href="{{ url_for('product_items', item_index=index) }}"><img src="data:image/jpeg;base64,{{ info[5] }}" width="55%" alt="Example Image"></a>
+                  <div class="p-4">
+                    <h1 class="items-center font-semibold" style="color: white;">
+                      {{ info[1] }}
+                    </h1>
+                    <p class="mt-2 text-sm" style=" color: white;">
+                      Price: ${{ info[2] }}
+                    </p>
+                  </div>
+                </div>
+              {% endfor %}
+          </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+</body>
+</html>
+

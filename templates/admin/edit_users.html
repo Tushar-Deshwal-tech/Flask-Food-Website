@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .buttons{
+         position: fixed;
+         bottom: 0;
+         right: 0;
+        }
+        .buttons button {
+         padding: 15px 50px;
+         }
+     </style>
+</head>
+<body>
+{% extends 'adminbase.html' %}
+{% block title %}
+{% endblock %}
+{% block content %}   
+<div class="relative overflow-x-auto">
+    <form method="POST" action="/update_user">
+        <table class="w-full text-sm text-left rtl:text-right text-white">
+            <thead class="text-blue-700 uppercase text-sm">
+                <tr>
+                    <th scope="col" class="px-4 py-3">ID</th>
+                    <th scope="col" class="px-4 py-3">First Name</th>
+                    <th scope="col" class="px-4 py-3">Last Name</th>
+                    <th scope="col" class="px-4 py-3">Number</th>
+                    <th scope="col" class="px-4 py-3">Email</th>
+                    <th scope="col" class="px-4 py-3">Password</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-b dark:bg-gray-800 dark:border-gray-700">
+                    <td class="px-4 py-3">{{ users[0] }}</td>
+                    <td class="px-4 py-3"><input type="text" name="first_name" placeholder="Enter New First Name" value="{{ users[1] }}" class="input-field" style=" background: transparent; color: white;"></td>
+                    <td class="px-4 py-3"><input type="text" name="last_name" placeholder="Enter New last Name" value="{{ users[2] }}" class="input-field" style=" background: transparent; color: white;"></td>
+                    <td class="px-4 py-3"><input type="text" name="number" placeholder="Enter New Number" value="{{ users[3] }}" class="input-field" style=" background: transparent; color: white;"></td>
+                    <td class="px-4 py-3"><input type="text" name="email" placeholder="Enter New Email" value="{{ users[4] }}" class="input-field" style="width: 200px;  background: transparent; color: white;"></td>
+                    <td class="px-4 py-3"><input type="text" name="password" placeholder="Enter New password" value="{{ users[5] }}" class="input-field" style="  background: transparent; color: white;"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="buttons">
+            <a href="/user"><button type="button" value="submit" class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-3 text-center mr-2 mb-2">Back</button></a>
+            <button type="submit" value="submit" class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-3 text-center mr-2 mb-2">Save</button>
+        </div>
+    </form>    
+</div>
+{% endblock %}
+</body>
+</html>

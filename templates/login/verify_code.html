@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>verify code</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}">
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% block title %}
+      Welcome to SwaadSagaar
+    {% endblock %}
+    {% block content %}
+    <div class="wrapper">
+        <div class="login_box">
+            <div class="login-header">
+                <span>Code</span>
+            </div>
+            <form action="/verify_code" method="post">
+                <div class="input_box">
+                    <input type="number" name="code" class="input-field" placeholder="Enter your code" required>
+                </div>
+                <div class="input_box">
+                    <input type="submit" class="input-submit" value="Verify Code">
+                </div>
+                <div class="register">
+                    <a href="/login">Back to login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endblock %}
+    </body>
+</html>

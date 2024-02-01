@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+</head>
+<body style="background-image: url(/static/img/background.jpg); background-size: cover; background-attachment: fixed;">
+  {% extends 'base.html' %}
+  {% block title %}
+      Home
+  {% endblock %}
+  {% block content %}
+    <div>
+      <h1 class="mt-40 text-3xl md:text-4xl lg:text-6xl" style="text-align: center; font-family: Times New Roman; margin-bottom: 150px; margin-top: 20%;;">
+        Welcome to SwaadSagaar
+      </h1>
+      <div class="flex justify-center">
+        <a href="/products">
+          <button type="button" class="text-gray-900 bg-white hover:bg-black hover:text-white border border-gray-200 font-medium rounded-lg text-sm px-3 py-2.5 text-center md:text-4xl">
+            Start Purchase
+          </button>
+        </a>
+      </div>
+    </div>
+  {% endblock %}
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}">
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% block title %}
+      Welcome to SwaadSagaar
+    {% endblock %}
+    {% block content %}
+    <div class="wrapper">
+        <div class="login_box">
+            <div class="login-header">
+                <span>Login</span>
+            </div>
+            <form action="/login_verify" method="post">
+                <div class="input_box">
+                    <input type="text" name="email" class="input-field" placeholder="Enter your email id" required>
+                    <i class="bx bx-user icon"><img src="{{ url_for('static', filename='img/email_icon.png') }}" alt=""></i> 
+                </div>
+        
+                <div class="input_box">
+                    <input type="password" name="password" class="input-field" id="password" placeholder="Enter your password" required>
+                    <i class="bx bx-lock-alt icon" onclick="togglePasswordVisibility()"><img id="password-icon" width="22px" src="{{ url_for('static', filename='img/closed_password_icon.png') }}" alt="" style="margin-top: 3px; margin-left: 2px; cursor: pointer;"></i> 
+                </div>
+        
+                <div class="remember-forgot">
+                    <div class="remember-me">
+                    </div>
+                    <div class="forgot">
+                        <a href="/forgot">Forgot Password</a>
+                    </div>
+                </div>
+        
+                <div class="input_box">
+                    <input type="submit" class="input-submit" value="Login">
+                </div>
+        
+                <div class="register">
+                    <span>Don't have an account <a href="/signup">Register</a></span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById("password");
+            const passwordIcon = document.getElementById("password-icon");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                passwordIcon.src = "{{ url_for('static', filename='img/open_password_icon.png') }}";
+            } else {
+                passwordInput.type = "password";
+                passwordIcon.src = "{{ url_for('static', filename='img/closed_password_icon.png') }}";
+            }
+        }
+    </script>
+    {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>send code</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}">
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% block title %}
+      Welcome to SwaadSagaar
+    {% endblock %}
+    {% block content %}
+    <div class="wrapper">
+        <div class="login_box">
+            <div class="login-header">
+                <span>Email</span>
+            </div>
+            <form action="/send_code" method="post">
+                <div class="input_box">
+                    <input type="email" name="email" class="input-field" placeholder="Enter your email id" required>
+                </div>
+                <div class="input_box">
+                    <input type="submit" class="input-submit" value="Send Code">
+                </div>
+                <div class="register">
+                    <a href="/login">Back to login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endblock %}
+    </body>
+</html>

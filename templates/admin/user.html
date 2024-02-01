@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .buttons{
+         position: fixed;
+         bottom: 0;
+         right: 0;
+        }
+        .buttons button {
+         padding: 15px 50px;
+         }
+     </style>
+</head>
+<body>
+{% extends 'adminbase.html' %}
+{% block title %}
+{% endblock %}
+{% block content %}
+<div class="relative overflow-x-auto">
+    <form method="POST" action="{{ url_for('update_user') }}">
+        <table class="w-full text-sm text-left rtl:text-right text-white">
+            <thead class="text-blue-700 uppercase text-sm">
+                <tr>
+                    <th scope="col" class="px-3 py-3">ID</th>
+                    <th scope="col" class="px-3 py-3">First Name</th>
+                    <th scope="col" class="px-3 py-3">Last Name</th>
+                    <th scope="col" class="px-3 py-3">Number</th>
+                    <th scope="col" class="px-3 py-3">Email</th>
+                    <th scope="col" class="px-6 py-3">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for index, info in users %}
+                <tr>
+                    <td class="px-3 py-4">
+                        {{ info[0] }}
+                    </td>
+                    <td class="px-3 py-4">{{ info[1] }}</td>
+                    <td class="px-3 py-4">{{ info[2] }}</td>
+                    <td class="px-3 py-4">{{ info[3] }}</td>
+                    <td class="px-3 py-4">{{ info[4] }}</td>
+                    <td class="px-3 py-3 flex space-x-2 text-blue-500"><a href="{{ url_for('edit_users', item_index=index) }}" class="hover:text-orange-500"><i class="fas fa-edit">Edit</i></a>
+                    <span>/</span>
+                    <a href="#" class="hover:text-red-700"><i class="fas fa-trash-alt">Remove</i></a></td>
+                </tr>
+                {% endfor%}
+            </tbody>
+        </table>
+    </form>
+</div>
+    {% endblock %}
+</body>
+</html>

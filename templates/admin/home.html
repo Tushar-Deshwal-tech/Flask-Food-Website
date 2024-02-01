@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+    </style>    
+</head>
+<body>
+{% extends 'adminbase.html' %}
+{% block title %}
+{% endblock %}
+{% block content %}
+<div class="container mx-auto">
+    <h1 class="text-3xl mb-4 text-center">Admin Dashboard</h1>
+
+    <div class="grid grid-cols-1  gap-4 inset-y-0">
+      <div class="bg-white p-4 rounded shadow-md flex flex-row justify-between items-center text-center">
+        <div class="mb-4">
+          <h2 class="text-xl font-semibold mb-2">Total Products</h2>
+          <p class="text-lg">{{ products_list }}</p>
+        </div>
+        <div class="mb-4">
+          <h2 class="text-xl font-semibold mb-2">Total Users</h2>
+          <p class="text-lg">{{ count_users }}</p>
+        </div>
+        <div class="mb-4">
+          <h2 class="text-xl font-semibold mb-2">Total Orders</h2>
+          <p class="text-lg">{{ order_count }}</p>
+        </div>
+        <div class="mb-4">
+          <h2 class="text-xl font-semibold mb-2">Total Products Sales</h2>
+          <p class="text-lg">{{ products_ordered }}</p>
+        </div>
+      </div>
+
+      <div class="bg-white p-4 rounded shadow-md">
+        <h2 class="text-xl font-semibold mb-2">Order Chart</h2>
+        <canvas id="orderChart" class="w-full"></canvas>
+      </div>
+    </div>
+</div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var ctx = document.getElementById('orderChart').getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+          datasets: [{
+            label: 'Orders per day',
+            data: [12, 19, 3, 5, 2, 6, 10],
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    });
+  </script>
+{% endblock %}
+</div>
+
+</body>
+</html>

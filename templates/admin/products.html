@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .buttons{
+         position: fixed;
+         bottom: 0;
+         right: 0;
+        }
+        .buttons button {
+         padding: 15px 50px;
+         }
+     </style>
+</head>
+<body>
+{% extends 'adminbase.html' %}
+{% block title %}
+{% endblock %}
+{% block content %}   
+<div class="relative overflow-x-auto">
+    {% for index, info in item %}
+    <form method="POST" action="{{ url_for('edits',item_index=index) }}">
+        <table class="w-full text-sm text-left rtl:text-right text-white ">
+            <thead class="text-blue-700 uppercase text-sm">
+                <tr>
+                    <th scope="col" class="px-4 py-3">ID</th>
+                    <th scope="col" class="px-6 py-3">Product name</th>
+                    <th scope="col" class="px-6 py-3">Price</th>
+                    <th scope="col" class="px-6 py-3">Rating</th>
+                    <th scope="col" class="px-6 py-3">Description</th>
+                    <th scope="col" class="px-6 py-3">Image</th>
+                    <th scope="col" class="px-6 py-3">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class=" border-b dark:bg-gray-800 dark:border-gray-700">
+                    <td class="px-4 py-3">{{ info[0] }}</td>
+                    <td class="px-6 py-3">{{ info[1][:14] }}{% if info[1]|length > 14 %}...{% endif %}</td>
+                    <td class="px-6 py-3">{{ info[2] }}</td>
+                    <td class="px-6 py-3">{{ info[3] }}</td>
+                    <td class="px-6 py-3">{{ info[4][:50] }}{% if info[4]|length > 50 %}...{% endif %}</td>
+                    <td class="px-6 py-3" ><img src="data:image/jpeg;base64,{{ info[5] }}" alt="Product Image" class="w-16 h-16 object-cover rounded-full"></td>
+                    <td class="px-3 py-3 flex  space-x-2 text-blue-500" style="margin-top: 25%;"><a href="{{ url_for('edits', item_index=info[0]) }}" class="hover:text-orange-500"><i class="fas fa-edit">Edit</i></a>
+                    <span>/</span>
+                    <a href="{{ url_for('remove_from_products', item_index=info[0]) }}" class="hover:text-red-700"><i class="fas fa-trash-alt">Remove</i></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>    
+    {% endfor %}
+</div>
+{% endblock %}
+</body>
+</html>
