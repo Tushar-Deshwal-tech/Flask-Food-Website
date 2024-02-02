@@ -298,7 +298,7 @@ def set_password():
         if new_password != confirm_password:
             flash("Your password is not match: Try again!")
 
-        criteria = validate_password(new_password)
+        criteria = verify_password(new_password)
 
         if criteria:
             for message in result:
@@ -339,7 +339,7 @@ def add_user():
         user_email_password = request.form['password']
         user_phone_number = request.form['number']
 
-        criteria = User_Deatils_Criteria(user_email, user_email_password, user_phone_number)
+        criteria = verify_password(user_email_password)
 
         if criteria:
             for message in result:
@@ -365,39 +365,6 @@ def add_user():
 # ==========  End Sign-Up  ==========
 
 # ==========  Verify User Deatils Criteria  ==========
-def validate_email(email):
-    if not email:
-        return "Email address is empty."
-    local_part, domain_part = email.split('@', 1)
-    if not local_part:
-        return "Local part of the email address is empty."
-    if not domain_part:
-        return "Domain part of the email address is empty."
-    if not re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email):
-        return "Email address is not in a valid format."
-
-def validate_number(number):
-    if len(number) != 10:
-        return "Number must be 10 digits long."
-    if not number.startswith(("6", "7", "8", "9")):
-        return "Number must start with a valid digit."
-
-def validate_password(password):
-    if len(password) < 8:
-        return "Password must be at least 8 characters long."
-    if not re.search(r"[A-Z]", password):
-        return "Password must include at least one uppercase letter."
-    if not re.search(r"[a-z]", password):
-        return "Password must include at least one lowercase letter."
-    if not re.search(r"[!@#$%]", password):
-        return "Password must include at least one special character from '!@#$%'."
-
-def User_Deatils_Criteria(email, password, number):
-    messages = []
-    messages.extend(filter(None, [validate_email(email), validate_password(password), validate_number(number)]))
-    return messages
-
-
 def verify_password(password):
     messages = []
 
@@ -572,7 +539,7 @@ def update_user():
     new_email = request.form.get("email")
     new_password = request.form.get("password")
 
-    criteria = User_Deatils_Criteria(new_email, new_password, new_number)
+    criteria = verify_password(new_password)
 
     if criteria:
         for message in result:
