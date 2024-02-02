@@ -5,3 +5,4 @@ psycopg2
 Flask-Bcrypt
 static
 requests
+templates
