@@ -194,12 +194,8 @@ def login_verify():
             elif user_email == admin_email and not bcrypt.checkpw(user_password.encode('utf-8'), bcrypt.hashpw(admin_password.encode('utf-8'), bcrypt.gensalt())):
                 flash("Admin password is incorrect: Try again")
                 return redirect(url_for('login'))
-            elif result:
-                stored_hashed_password_hex = result[1]
-                user_entered_password = user_password
-                stored_hashed_password_bytes = bytes.fromhex(stored_hashed_password_hex[2:])  # Remove leading \x
-                hashed_user_entered_password = bcrypt.hashpw(user_entered_password.encode('utf-8'), stored_hashed_password_bytes)
-                if hashed_user_entered_password == stored_hashed_password_bytes:
+            elif result:                
+                if user_password == result[1]:
                     user_name = result[2]
                     flash("User login successful")
                     return redirect(url_for('index'))
@@ -298,12 +294,9 @@ def set_password():
         if new_password != confirm_password:
             flash("Your password is not match: Try again!")
 
-        # Hash the new password
-        hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())
-
         # Update the password in the database
         update_query = "UPDATE user_details SET password = %s WHERE email = %s"
-        values = (hashed_password, user_emails)
+        values = (new_password, user_emails)
 
         try:
             cursor.execute(update_query, values)
@@ -336,10 +329,8 @@ def add_user():
         if len(user_email_password) < 8:
             flash("Password must be at least 8 characters long.")
         else:
-            hashed_password = bcrypt.hashpw(user_email_password.encode('utf-8'), bcrypt.gensalt())
-
             query = "INSERT INTO user_details (id, first_name, last_name, number, email, password) VALUES (%s, %s, %s, %s, %s, %s)"
-            values = (user_id, user_first_name, user_last_name, user_phone_number, user_email, hashed_password)
+            values = (user_id, user_first_name, user_last_name, user_phone_number, user_email, user_email_password)
 
             try:
                 cursor.execute(query, values)
@@ -504,43 +495,22 @@ def update_user():
     new_email = request.form.get("email")
     new_password = request.form.get("password")
 
-    # Hash the new password if it's not empty
-    if new_password:
-        hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())
-    else:
-        hashed_password = None  # Set hashed_password to None if no new password is provided
-
     select_query = "SELECT * FROM user_details WHERE id = %s"
     cursor.execute(select_query, (users_id,))
     current_data = cursor.fetchone()
     if current_data:
         # Check if new password is provided and update the password accordingly
-        if hashed_password:
-            update_query = (
-                "UPDATE user_details "
-                "SET first_name = %s, last_name = %s, number = %s, email = %s, password = %s "
-                "WHERE id = %s"
-            )
-            try:
-                cursor.execute(update_query, (new_first_name, new_last_name, new_number, new_email, hashed_password, user_id))
-                print(f"User: {hashed_password}, database: {current_data[5]}")
-                mydata.commit()
-                flash("User updated successfully")
-            except Exception as e:
-                flash(f"Error updating user: {e}")
-        else:
-            # If no new password is provided, update other fields without changing the password
-            update_query = (
-                "UPDATE user_details "
-                "SET first_name = %s, last_name = %s, number = %s, email = %s "
-                "WHERE id = %s"
-            )
-            try:
-                cursor.execute(update_query, (new_first_name, new_last_name, new_number, new_email, user_id))
-                mydata.commit()
-                flash("User updated successfully")
-            except Exception as e:
-                flash(f"Error updating user: {e}")
+        update_query = (
+            "UPDATE user_details "
+            "SET first_name = %s, last_name = %s, number = %s, email = %s, password = %s "
+            "WHERE id = %s"
+        )
+        try:
+            cursor.execute(update_query, (new_first_name, new_last_name, new_number, new_email, new_password, user_id))
+            mydata.commit()
+            flash("User updated successfully")
+        except Exception as e:
+            flash(f"Error updating user: {e}")
     else:
         flash("User not found")
 
